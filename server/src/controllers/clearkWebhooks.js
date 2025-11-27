@@ -17,7 +17,7 @@ try {
         "svix-signature" : req.headers["svix-signature"],
      }
         // Veryfing Headers
-        await whook.verify(JSON.stringify(req,body), headers)
+        await whook.verify(JSON.stringify(req.body), headers)
 
         // getting data from requested body
         const {data, type} = req.body
