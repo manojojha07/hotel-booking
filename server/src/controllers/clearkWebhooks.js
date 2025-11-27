@@ -49,7 +49,7 @@ try {
    
 } catch (error) {
     console.log("Error in Clerk webhook:" , error.message);
-    rs.json({ success:false, message: error.message});
+    res.json({ success:false, message: error.message});
     
 }
 }

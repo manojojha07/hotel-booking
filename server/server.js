@@ -17,7 +17,7 @@ app.use(clerkMiddleware());
 
 
 // Api to Liestitin to Clerek
-app.use("/api/clerk", clerkWebhooks)
+app.post("/api/clerk", clerkWebhooks)
 
 
 
