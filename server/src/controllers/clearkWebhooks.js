@@ -7,11 +7,12 @@ const clerkWebhooks = async (req, res) => {
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
     // Getting headers
-    const headers = { 
-      "svix-id": req.headers["svix-id"],
-      "svix-timestamp": req.headers["svix-timestamp"],
-      "svix-signature": req.headers["svix-signature"],
-    };
+   const headers = {
+  "svix-id": req.headers["svix-id"],
+  "svix-timestamp": req.headers["svix-timestamp"],
+  "svix-signature": req.headers["svix-signature"]
+};
+
 
     // Verifying Headers
     await whook.verify(JSON.stringify(req.body), headers);
