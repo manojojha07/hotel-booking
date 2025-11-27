@@ -25,7 +25,7 @@ try {
         const userData= {
             _id : data.id,
             email: data.email_addresses[0].email_address,
-            username: data.first_name + " " + data.lst_name,
+            username: data.first_name + " " + data.last_name,
             image: data.image_url
         };
 
@@ -48,7 +48,7 @@ try {
         res.json({success: true, message: "webhook Recieved"});
    
 } catch (error) {
-    console.log("success: fasle Clerek" , error.message);
+    console.log("Error in Clerk webhook:" , error.message);
     rs.json({ success:false, message: error.message});
     
 }
