@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-console.log(process.env.MONGO_URI);
 
 const DbConnected = async() => {
 try {
