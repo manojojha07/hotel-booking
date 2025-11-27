@@ -5,16 +5,16 @@ import User from "../models/User.js";
 
 
 
-const clerkWebhooks = async (rea ,res) => {
+const clerkWebhooks = async (req ,res) => {
 try {
     // Create a svix instance with clerk webhook secret.
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
     // Getting headers
     const headers ={ 
-        "svix-id" : requestAnimationFrame.headers["svix-id"],
-        "svix-timestamp" : requestAnimationFrame.headers["svix-timestamp"],
-        "svix-signature" : requestAnimationFrame.headers["svix-signature"],
+        "svix-id" : req.headers["svix-id"],
+        "svix-timestamp" : req.headers["svix-timestamp"],
+        "svix-signature" : req.headers["svix-signature"],
      }
         // Veryfing Headers
         await whook.verify(JSON.stringify(req,body), headers)
