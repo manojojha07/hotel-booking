@@ -9,7 +9,7 @@ DbConnected();
 
 
 const app = express();
-app.use(cors());
+
 
 // ❗ Clerk webhook route MUST come before express.json()
 // ❗ And MUST use express.raw()
@@ -22,8 +22,12 @@ app.post(
 // Now it's safe to parse JSON for normal routes
 app.use(express.json());
 
+app.use(cors());
+
 // Clerk auth middleware for protected routes
 app.use(clerkMiddleware());
+
+
 
 // Test route
 app.get('/', (req, res) => res.send("Api Is Working Finally!"));
