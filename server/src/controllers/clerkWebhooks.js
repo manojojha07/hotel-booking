@@ -4,7 +4,7 @@ import User from "../models/User.js";
 const clerkWebhooks = async (req, res) => {
   try {
     // Create a svix instance with clerk webhook secret.
-    const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
+    const whook = new Webhook(process.env.CLERK_SECRATE_KEY);
 
     // Getting headers
    const headers = {
@@ -42,7 +42,7 @@ const clerkWebhooks = async (req, res) => {
         break;
     }
 
-    return res.json({ success: true, message: "Webhook Received" });
+    return res.json({ success: true, message: "Webhook Received : " });
 
   } catch (error) {
     console.log("Error in Clerk webhook:", error.message);

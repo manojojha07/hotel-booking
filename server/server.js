@@ -1,39 +1,35 @@
 import express from 'express'
-import "dotenv/config"
 import cors from 'cors'
+import 'dotenv/config'
+import dbConnect from './src/configs/db.js';
 import { clerkMiddleware } from '@clerk/express'
-import clerkWebhooks from './src/controllers/clearkWebhooks.js';
-import DbConnected from './src/config/db.config.js';
+import clerkWebhooks from './src/controllers/clerkWebhooks.js';
 
-DbConnected();
+
 
 
 const app = express();
-
-
-// ❗ Clerk webhook route MUST come before express.json()
-// ❗ And MUST use express.raw()
-app.post(
-  "/api/clerk",
-  express.raw({ type: "application/json" }),   // <-- REQUIRED
-  clerkWebhooks
-);
-
-// Now it's safe to parse JSON for normal routes
-app.use(express.json());
-
 app.use(cors());
 
-// Clerk auth middleware for protected routes
-app.use(clerkMiddleware());
+
+app.get("/" , (req, res) => res.send("Api Working Success Full :) ") );
+
+
+app.use('/api/clerk' , clerkWebhooks);
+
+app.use(clerkMiddleware())
+app.use(express.json());
 
 
 
-// Test route
-app.get('/', (req, res) => res.send("Api Is Working Finally!"));
+
+
+
+
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server Running at http://localhost:${PORT}`);
-});
+dbConnect()
+app.listen( PORT , () => {
+    console.log(`server is runing http://localhost:${PORT}`); 
+})
