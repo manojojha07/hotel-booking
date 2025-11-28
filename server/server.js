@@ -1,11 +1,12 @@
 import express from 'express'
 import "dotenv/config"
 import cors from 'cors'
-import DbConnected from './src/config/db.config.js';
 import { clerkMiddleware } from '@clerk/express'
 import clerkWebhooks from './src/controllers/clearkWebhooks.js';
+import DbConnected from './src/config/db.config.js';
 
 DbConnected();
+
 
 const app = express();
 app.use(cors());
