@@ -1,9 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from '../../Components/Title'
-import { assets, dashboardDummyData } from '../../assets/assets'
+import { assets } from '../../assets/assets'
+import { useAppContext } from '../../Context/AppContext'
 
 const Dashboard = () => {
-    const  [dashboardData, setDashboardData]= useState(dashboardDummyData);
+
+const { currency, user, getToken, toast, axios } = useAppContext();
+
+    const  [dashboardData, setDashboardData]= useState({
+      bookings : [],
+      totalBookings : 0,
+      totalRevenue: 0,
+    });
+
+    const fetchDashboarData = async() => {
+      try {
+        const { data } = await axios.get('/api/bookings/hotel', {headers:{
+        Authorization: `Bearer ${await getToken()}` 
+       }})
+       if(data.success){
+        setDashboardData(data.dashboardData)
+       }else{
+        toast.error(data.message)
+       }
+      } catch (error) {
+                toast.error(error.message)
+
+      }
+    }
+
+
+    useEffect(()=> {
+if(user){
+  fetchDashboarData();
+}
+    },[user])
+    
   return (
     <div className=''>
      <Title align='left' font='outfit' title='Dashboard' subTitle='Monitor your room listings, track bookings and analyze revenue—all in one place. Stay updated with real-time insights to ensure smooth operations.' />
@@ -21,7 +53,7 @@ const Dashboard = () => {
            <img src={assets.totalRevenueIcon} alt="total-booking" className='max-sm:hidden h-10' />
            <div className='flex flex-col sm:ml-4 font-medium'> 
             <p className='text-blue-500 text-lg'>Total Revenue</p>
-            <p className='text-neutral-400 text-base'>₹ {dashboardData.totalRevenue}</p>
+            <p className='text-neutral-400 text-base'>{currency} {dashboardData.totalRevenue}</p>
            </div>
         </div>
      </div>
@@ -52,7 +84,7 @@ const Dashboard = () => {
                 </td>
 
                 <td className='py-3 px-4 text-gray-600 border-t text-center border-gray-300'>
-                   ₹ {item.totalPrice}
+                   {currency} {item.totalPrice}
                 </td>
                 
                 <td className='py-3 px-4  border-t text-center border-gray-300'>
